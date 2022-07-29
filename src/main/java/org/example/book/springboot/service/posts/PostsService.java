@@ -60,4 +60,15 @@ public class PostsService {
          PostsListResponse 변환 -> List로 반환하는 메소드
          */
     }
+
+    @Transactional
+    public void delete (Long id) {
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        // JpaRepository에서 delete 메소드를 지원
+        // 엔티티를 파라미터로 삭제 or deleteById를 이용하여 id로 삭제
+        // 존재하는 Posts인지 엔티티 조회 후 그대로 삭제
+        postsRepository.delete(posts);
+    }
 }
